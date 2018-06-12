@@ -37,4 +37,9 @@ public class Cell {
     public List<Integer> getPossibleDigits() {
         return possibleDigits;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
 }

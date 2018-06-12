@@ -5,25 +5,25 @@ import java.util.List;
 
 public class Cell {
 
-    private int digit;
+    private int value;
     private int x;
     private int y;
     private List<Integer> possibleDigits;
 
-    public Cell(int digit, int x, int y) {
-        if (digit < 0 || digit > 9) throw new IllegalArgumentException("Cell digit must be 0-9");
-        this.digit = digit;
+    public Cell(int value, int x, int y) {
+        if (value < 0 || value > 9) throw new IllegalArgumentException("Cell value must be 0-9");
+        this.value = value;
         this.x = x;
         this.y = y;
         this.possibleDigits = new ArrayList<>();
     }
 
-    public int getDigit() {
-        return digit;
+    public int getValue() {
+        return value;
     }
 
-    public void setDigit(int digit) {
-        this.digit = digit;
+    public void setValue(int value) {
+        this.value = value;
     }
 
     public int getX() {

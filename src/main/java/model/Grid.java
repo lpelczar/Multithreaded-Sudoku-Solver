@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Grid {
 
     private static final int WIDTH = 9;
@@ -20,6 +23,37 @@ public class Grid {
                 cells[index] = new Cell(value, x, y);
             }
         }
+    }
+
+    public Cell getCell(int x, int y) {
+        return cells[y * WIDTH + x];
+    }
+
+    public List<Cell> getRow(int y) {
+        List<Cell> row = new ArrayList<>();
+        for (int x = 0; x < WIDTH; x++)
+            row.add(getCell(x, y));
+        return row;
+    }
+
+    public List<Cell> getCol(int x) {
+        List<Cell> col = new ArrayList<>();
+        for (int y = 0; y < HEIGHT; y ++)
+            col.add(getCell(x, y));
+        return col;
+    }
+
+    public List<Cell> getBox(int id) {
+        int xOffset = 3 * (id % 3 );
+        int yOffset = 3 * (id / 3);
+        List<Cell> box = new ArrayList<>();
+
+        for (int y = 0; y < 3; y++) {
+            for (int x = 0; x < 3; x++) {
+                box.add(getCell(x + xOffset, y + yOffset));
+            }
+        }
+        return box;
     }
 
     @Override

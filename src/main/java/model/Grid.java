@@ -21,4 +21,25 @@ public class Grid {
             }
         }
     }
+
+    @Override
+    public String toString() {
+        String horizontalSeparator = "+---+---+---+\n";
+        String verticalSeparator = "|";
+        String newline = "\n";
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(horizontalSeparator);
+        for (int i = 1; i <= 81; i++) {
+            if (i % 9 == 1) sb.append(verticalSeparator);
+
+            sb.append(cells[i - 1].getValue());
+
+            if (i % 3 == 0) sb.append(verticalSeparator);
+            if (i % 9 == 0) sb.append(newline);
+            if (i % 27 == 0) sb.append(horizontalSeparator);
+        }
+        return sb.toString();
+    }
 }

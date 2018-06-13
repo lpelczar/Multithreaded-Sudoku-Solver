@@ -1,7 +1,5 @@
 package model;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +11,7 @@ public class Grid {
     private Cell[] cells;
 
     public Grid(int[] cellValues) {
-        if(cellValues.length != NUMBER_OF_CELLS){
-            throw new IllegalArgumentException("Table must contians 81 elements");
-        }
-        //TODO: validate cells length (81) and check is it a valid sudoku
+        
         initializeCellsFrom(cellValues);
     }
 

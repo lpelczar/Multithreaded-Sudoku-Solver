@@ -3,10 +3,16 @@ package solver;
 import model.Cell;
 import model.Grid;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 
 public class Solver {
 
     private Grid grid;
+    private boolean cycleFailed;
 
     public Solver(Grid grid) {
         this.grid = grid;
@@ -19,7 +25,10 @@ public class Solver {
     }
 
     public void fillWithPossibilities() {
+        cycleFailed = true;
+
         for (Cell cell : grid.getCells()) {
+            cell.getPossibilities().clear();
             if (cell.getValue() == 0) {
                 for (int value = 1; value <= 9; value++) {
                     if (isValueLegal(cell.getX(), cell.getY(), value)) {
@@ -27,12 +36,20 @@ public class Solver {
                     }
                 }
             }
-            if (cell.getPossibilities().size() == 1) {
-                System.out.println("x ->" + cell.getX());
-                System.out.println("y ->" + cell.getY());
-                System.out.println(cell.getPossibilities());
+        }
+    }
+
+    public void countSolved(List<Cell> cells) {
+
+        List<Cell> emptyCells = cells.stream().filter(x -> x.getValue() == 0).collect(Collectors.toList());
+        Map<Integer, Integer> occurrences = new HashMap<>();
+        for (Cell cell : emptyCells) {
+            for (Integer possibility : cell.getPossibilities()) {
+                occurrences.putIfAbsent(possibility, 0);
+                occurrences.put(possibility, occurrences.get(possibility) + 1);
             }
         }
+        updateSolved(emptyCells, occurrences);
     }
 
     public Grid getGrid() {

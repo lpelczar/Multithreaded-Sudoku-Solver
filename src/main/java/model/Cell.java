@@ -35,6 +35,9 @@ public class Cell {
     }
 
     public Set<Integer> getPossibilities() {
+        if (value != 0) {
+            return new HashSet<>();
+        }
         return possibilities;
     }
 

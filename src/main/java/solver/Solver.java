@@ -20,9 +20,11 @@ public class Solver {
 
     public void fillWithPossibilities() {
         for (Cell cell : grid.getCells()) {
-            for (int value = 1; value <= 9; value++) {
-                if (isValueLegal(cell.getX(), cell.getY(), value)) {
-                    cell.getPossibilities().add(value);
+            if (cell.getValue() == 0) {
+                for (int value = 1; value <= 9; value++) {
+                    if (isValueLegal(cell.getX(), cell.getY(), value)) {
+                        cell.getPossibilities().add(value);
+                    }
                 }
             }
         }

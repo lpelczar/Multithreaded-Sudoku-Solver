@@ -5,8 +5,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import solver.Solver;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SolverTest {
 
@@ -31,5 +33,19 @@ public class SolverTest {
         assertTrue(solver.isValueLegal(3,1, 1));
         assertTrue(solver.isValueLegal(3,1, 8));
         assertTrue(solver.isValueLegal(3,1, 7));
+    }
+
+    @Test
+    public void fillWithPossibilitiesTest() {
+        solver.fillWithPossibilities();
+        Set<Integer> expected = new HashSet<>();
+        expected.add(1);
+        expected.add(4);
+        expected.add(6);
+        expected.add(7);
+        int x = 0;
+        int y = 0;
+        Set<Integer> actual = solver.getGrid().getCell(x , y).getPossibilities();
+        assertEquals(expected, actual);
     }
 }

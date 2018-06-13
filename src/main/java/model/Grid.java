@@ -71,6 +71,10 @@ public class Grid {
         return -1;
     }
 
+    public Cell[] getCells() {
+        return cells;
+    }
+
     @Override
     public String toString() {
         String horizontalSeparator = "+---+---+---+\n";

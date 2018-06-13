@@ -1,5 +1,7 @@
 package model;
 
+import com.sun.org.apache.bcel.internal.generic.RETURN;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +56,19 @@ public class Grid {
             }
         }
         return box;
+    }
+
+    public int getBoxIdBy(int x, int y) {
+        if (x >= 0 && x <= 2 && y >= 0 && y <= 2) return 0;
+        if (x >= 3 && x <= 5 && y >= 0 && y <= 2) return 1;
+        if (x >= 6 && x <= 8 && y >= 0 && y <= 2) return 2;
+        if (x >= 0 && x <= 2 && y >= 3 && y <= 5) return 3;
+        if (x >= 3 && x <= 5 && y >= 3 && y <= 5) return 4;
+        if (x >= 6 && x <= 8 && y >= 3 && y <= 5) return 5;
+        if (x >= 0 && x <= 2 && y >= 6 && y <= 8) return 6;
+        if (x >= 3 && x <= 5 && y >= 6 && y <= 8) return 7;
+        if (x >= 6 && x <= 8 && y >= 6 && y <= 8) return 8;
+        return -1;
     }
 
     @Override

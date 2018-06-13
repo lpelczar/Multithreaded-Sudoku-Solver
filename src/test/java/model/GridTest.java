@@ -4,6 +4,8 @@ import loader.CsvLoader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class GridTest {
@@ -17,6 +19,12 @@ class GridTest {
         });
 
 
+    }
+
+    @Test
+    void test_load(){
+        int [] table = new CsvLoader().load("src/main/resources/easy/e1_sudoku.csv");
+        assertEquals(new Grid(table).toStringForTest(), Arrays.toString(table));
     }
 
 }

@@ -67,6 +67,24 @@ public class Solver {
         }
     }
 
+    public void solve() {
+        while (!cycleFailed) {
+            fillWithPossibilities();
+            for (int i = 0; i < 9; i++) {
+                countSolved(grid.getBox(i));
+            }
+            fillWithPossibilities();
+            for (int i = 0; i < 9; i++) {
+                countSolved(grid.getCol(i));
+            }
+            fillWithPossibilities();
+            for (int i = 0; i < 9; i++) {
+                countSolved(grid.getRow(i));
+            }
+        }
+        System.out.println(grid.toString());
+    }
+
     public Grid getGrid() {
         return grid;
     }

@@ -1,21 +1,21 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Cell {
 
     private int value;
     private int x;
     private int y;
-    private List<Integer> possibleDigits;
+    private Set<Integer> possibilities;
 
     public Cell(int value, int x, int y) {
         if (value < 0 || value > 9) throw new IllegalArgumentException("Cell value must be 0-9");
         this.value = value;
         this.x = x;
         this.y = y;
-        this.possibleDigits = new ArrayList<>();
+        this.possibilities = new HashSet<>();
     }
 
     public int getValue() {
@@ -34,8 +34,8 @@ public class Cell {
         return y;
     }
 
-    public List<Integer> getPossibleDigits() {
-        return possibleDigits;
+    public Set<Integer> getPossibilities() {
+        return possibilities;
     }
 
     @Override

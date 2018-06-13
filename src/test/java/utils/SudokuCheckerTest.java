@@ -1,12 +1,11 @@
 package utils;
 
 import loader.CsvLoader;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PreliminarySudokuCheckerTest {
+class SudokuCheckerTest {
 
     private CsvLoader csvLoader = new CsvLoader();
 
@@ -14,22 +13,20 @@ class PreliminarySudokuCheckerTest {
     @Test
     void test_wrongValuesInSukodu(){
         int [] table = this.csvLoader.load("src/test/java/utils/repeatedValues.csv");
-        assertFalse(PreliminarySudokuChecker.isSudoku(table));
+        assertFalse(SudokuChecker.isSudoku(table));
     }
 
     @Test
     void test_correctUnsolvedSudoku(){
         int [] table = this.csvLoader.load("src/main/resources/easy/e1_sudoku.csv");
-        assertTrue(PreliminarySudokuChecker.isSudoku(table));
+        assertTrue(SudokuChecker.isSudoku(table));
     }
 
     @Test
     void test_correctSolvedSudoku(){
         int [] table = this.csvLoader.load("src/main/resources/easy/e1_sol.csv");
-        assertTrue(PreliminarySudokuChecker.isSudoku(table));
+        assertTrue(SudokuChecker.isSudoku(table));
 
     }
-
-
 
 }

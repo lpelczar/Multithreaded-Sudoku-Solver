@@ -3,7 +3,7 @@ package utils;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class PreliminarySudokuChecker {
+public class SudokuChecker {
 
     public static boolean isSudoku(int [] cellValues){
 

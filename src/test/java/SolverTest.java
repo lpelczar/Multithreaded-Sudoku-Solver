@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import solver.Solver;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SolverTest {
 
@@ -19,9 +20,16 @@ public class SolverTest {
     }
 
     @Test
-    public void isLegalValueTest() {
+    public void isIllegalValueTest() {
         assertFalse(solver.isValueLegal(1,0, 9));
         assertFalse(solver.isValueLegal(1,0, 8));
         assertFalse(solver.isValueLegal(1,0, 4));
+    }
+
+    @Test
+    public void isLegalValueTest() {
+        assertTrue(solver.isValueLegal(3,1, 1));
+        assertTrue(solver.isValueLegal(3,1, 8));
+        assertTrue(solver.isValueLegal(3,1, 7));
     }
 }

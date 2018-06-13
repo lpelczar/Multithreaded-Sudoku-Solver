@@ -3,6 +3,7 @@ package model;
 import utils.SudokuChecker;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Grid {
@@ -94,5 +95,9 @@ public class Grid {
             if (i % 27 == 0) sb.append(horizontalSeparator);
         }
         return sb.toString();
+    }
+
+    public String toStringForTest() {
+        return  Arrays.toString(cells);
     }
 }

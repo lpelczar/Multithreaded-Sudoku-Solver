@@ -1,5 +1,7 @@
 package model;
 
+import utils.SudokuChecker;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +13,11 @@ public class Grid {
     private Cell[] cells;
 
     public Grid(int[] cellValues) {
-        
-        initializeCellsFrom(cellValues);
+        if(SudokuChecker.isSudoku(cellValues)) {
+            initializeCellsFrom(cellValues);
+        }else {
+            throw new IllegalArgumentException("It is not a sudoku");
+        }
     }
 
     private void initializeCellsFrom(int[] cellValues) {

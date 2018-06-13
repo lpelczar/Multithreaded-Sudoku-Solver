@@ -1,5 +1,6 @@
 package utils;
 
+import loader.CsvLoader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -7,24 +8,28 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PreliminarySudokuCheckerTest {
 
-    private PreliminarySudokuChecker checker;
+    private CsvLoader csvLoader = new CsvLoader();
 
-    @BeforeEach
-    void setup(){
-        this.checker = new PreliminarySudokuChecker();
+
+    @Test
+    void test_wrongValuesInSukodu(){
+        int [] table = this.csvLoader.load("src/test/java/utils/repeatedValues.csv");
+        assertFalse(PreliminarySudokuChecker.isSudoku(table));
     }
 
     @Test
-    void test_nonrecurinValues(){
-        int [] table = {1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    void test_correctUnsolvedSudoku(){
+        int [] table = this.csvLoader.load("src/main/resources/easy/e1_sudoku.csv");
         assertTrue(PreliminarySudokuChecker.isSudoku(table));
     }
 
     @Test
-    void test_recurirngValuesInHorizonalRows(){
+    void test_correctSolvedSudoku(){
+        int [] table = this.csvLoader.load("src/main/resources/easy/e1_sol.csv");
+        assertTrue(PreliminarySudokuChecker.isSudoku(table));
 
-        int [] table = {2, 3, 2, 4, 2, 2, 7, 6, 8};
-        assertFalse(PreliminarySudokuChecker.isSudoku(table));
     }
+
+
 
 }

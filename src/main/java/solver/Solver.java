@@ -52,6 +52,21 @@ public class Solver {
         updateSolved(emptyCells, occurrences);
     }
 
+    private void updateSolved(List<Cell> cells, Map<Integer, Integer> occurrences) {
+
+        List<Integer> values = occurrences.entrySet().stream().filter(element -> element.getValue() == 1)
+                        .map(Map.Entry::getKey)
+                        .collect(Collectors.toList());
+        for (Integer value : values) {
+            for (Cell cell : cells) {
+                if (cell.getPossibilities().contains(value)) {
+                    cell.setValue(value);
+                    cycleFailed = false;
+                }
+            }
+        }
+    }
+
     public Grid getGrid() {
         return grid;
     }

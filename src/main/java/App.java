@@ -1,6 +1,7 @@
 import loader.CsvLoader;
 import loader.SudokuFileLoader;
 import model.Grid;
+import solver.Solver;
 
 public class App {
 
@@ -11,9 +12,9 @@ public class App {
             SudokuFileLoader sudokuFileLoader = new CsvLoader();
             int[] sudokuArray = sudokuFileLoader.load(filename);
             if (sudokuArray != null) {
-                // Solve sudoku
                 Grid grid = new Grid(sudokuArray);
-                System.out.println(grid.toString());
+                Solver solver = new Solver(grid);
+                solver.solve();
             } else {
                 System.out.println("Invalid sudoku file!");
             }

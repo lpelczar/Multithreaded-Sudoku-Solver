@@ -23,8 +23,10 @@ class CsvLoaderTest {
 
         assertNull(this.loader.load("src/test/test_resources/only_digits.csv"));
     }
-    
 
-
+    @Test
+    void testPassCsvFilewWithWrongValues(){
+        assertNull(this.loader.load("src/test/test_resources/"));
+    }
 
 }

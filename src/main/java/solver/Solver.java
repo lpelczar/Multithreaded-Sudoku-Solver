@@ -27,6 +27,11 @@ public class Solver {
                     }
                 }
             }
+            if (cell.getPossibilities().size() == 1) {
+                System.out.println("x ->" + cell.getX());
+                System.out.println("y ->" + cell.getY());
+                System.out.println(cell.getPossibilities());
+            }
         }
     }
 

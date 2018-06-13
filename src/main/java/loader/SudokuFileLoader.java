@@ -2,5 +2,5 @@ package loader;
 
 public interface SudokuFileLoader {
 
-    byte[] load(String filename);
+    int[] load(String filename);
 }

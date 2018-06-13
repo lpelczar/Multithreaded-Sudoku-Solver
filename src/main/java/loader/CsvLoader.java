@@ -2,7 +2,7 @@ package loader;
 
 import com.opencsv.CSVReader;
 import com.sun.istack.internal.Nullable;
-import utils.ByteChecker;
+import utils.IntegerChecker;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,17 +12,17 @@ public class CsvLoader implements SudokuFileLoader {
 
     @Override
     @Nullable
-    public byte[] load(String filepath) {
+    public int[] load(String filepath) {
 
         final int BOARD_SIZE = 81;
-        byte[] result = new byte[BOARD_SIZE];
+        int[] result = new int[BOARD_SIZE];
 
         try (CSVReader csvReader = new CSVReader(Files.newBufferedReader(Paths.get(filepath)))) {
             int counter = 0;
             for (String[] row : csvReader.readAll()) {
                 for (String cell : row) {
                     if (isCorrectCell(cell) && counter < BOARD_SIZE) {
-                        result[counter] = Byte.parseByte(cell);
+                        result[counter] = Integer.parseInt(cell);
                     } else {
                         return null;
                     }
@@ -40,6 +40,6 @@ public class CsvLoader implements SudokuFileLoader {
 
     private boolean isCorrectCell(String cell) {
         final int MAX_CELL_VALUE = 9;
-        return ByteChecker.isByte(cell) && Byte.parseByte(cell) >= 0 && Byte.parseByte(cell) <= MAX_CELL_VALUE;
+        return IntegerChecker.isInteger(cell) && Integer.parseInt(cell) >= 0 && Integer.parseInt(cell) <= MAX_CELL_VALUE;
     }
 }

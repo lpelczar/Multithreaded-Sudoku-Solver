@@ -1,10 +1,10 @@
 package utils;
 
-public class ByteChecker {
+public class IntegerChecker {
 
-    public static boolean isByte(String s) {
+    public static boolean isInteger(String s) {
         try {
-            Byte.parseByte(s);
+            Integer.parseInt(s);
         } catch(NumberFormatException | NullPointerException e) {
             return false;
         }

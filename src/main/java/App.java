@@ -2,6 +2,7 @@ import loader.CsvLoader;
 import loader.SudokuFileLoader;
 import model.Grid;
 import solver.Solver;
+import solver.SolverThread;
 
 public class App {
 
@@ -14,7 +15,8 @@ public class App {
             if (sudokuArray != null) {
                 Grid grid = new Grid(sudokuArray);
                 Solver solver = new Solver(grid);
-                solver.solve();
+                Thread thread = new Thread(new SolverThread(solver));
+                thread.start();
             } else {
                 System.out.println("Invalid sudoku file!");
             }

@@ -80,6 +80,16 @@ public class Grid {
         return cells;
     }
 
+    public int [] translateCells(){
+
+        int [] cellValues = new int[NUMBER_OF_CELLS];
+        for(int i = 0; i < NUMBER_OF_CELLS; i++){
+            cellValues[i] = cells[i].getValue();
+        }
+
+        return cellValues;
+    }
+
     @Override
     public String toString() {
         String horizontalSeparator = "+---+---+---+\n";

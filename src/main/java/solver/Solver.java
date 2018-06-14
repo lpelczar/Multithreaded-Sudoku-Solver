@@ -85,6 +85,8 @@ public class Solver {
         System.out.println(grid.toString());
     }
 
+    // TODO 1: isSolved method
+
     public Grid getGrid() {
         return grid;
     }

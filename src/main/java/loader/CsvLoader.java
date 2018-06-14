@@ -32,9 +32,7 @@ public class CsvLoader implements SudokuFileLoader {
             if (counter == BOARD_SIZE) {
                 return result;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) {}
         return null;
     }
 

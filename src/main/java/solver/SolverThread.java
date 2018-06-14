@@ -3,8 +3,8 @@ package solver;
 
 import model.Cell;
 import model.Grid;
+import utils.InvalidSudokuException;
 
-import java.util.stream.Stream;
 
 public class SolverThread implements Runnable {
 
@@ -26,8 +26,11 @@ public class SolverThread implements Runnable {
             System.out.println(solver.getGrid().toString());
             System.out.println("Threads used: " + threadsUsed);
         } else {
-            if (!Stream.of(solver.getGrid().getCells()).allMatch(x -> x.getValue() != 0))
+            try {
                 splitSolving();
+            } catch (InvalidSudokuException e) {
+                // invalid sudoku
+            }
         }
     }
 
@@ -69,6 +72,6 @@ public class SolverThread implements Runnable {
             possibilities++;
         }
 
-        throw new IllegalStateException("Cell with lowest possibilities not found");
+        throw new InvalidSudokuException();
     }
 }

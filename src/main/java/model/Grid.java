@@ -1,5 +1,6 @@
 package model;
 
+import utils.InvalidSudokuException;
 import utils.SudokuChecker;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class Grid {
         if(SudokuChecker.isSudoku(cellValues)) {
             initializeCellsFrom(cellValues);
         }else {
-            throw new IllegalArgumentException("It is not a sudoku");
+            throw new InvalidSudokuException();
         }
     }
 

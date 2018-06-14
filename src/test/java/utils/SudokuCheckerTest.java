@@ -12,7 +12,7 @@ class SudokuCheckerTest {
 
     @Test
     void test_wrongValuesInSukodu(){
-        int [] table = this.csvLoader.load("src/test/java/utils/repeatedValues.csv");
+        int [] table = this.csvLoader.load("src/test/test_resources/repeatedValues.csv");
         assertFalse(SudokuChecker.isSudoku(table));
     }
 

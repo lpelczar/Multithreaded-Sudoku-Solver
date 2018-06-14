@@ -13,7 +13,7 @@ class GridTest {
     @Test
     void test_passTableWithRepeatingValues(){
 
-        int [] table = new CsvLoader().load("src/test/java/utils/repeatedValues.csv");
+        int [] table = new CsvLoader().load("src/test/test_resources/repeatedValues.csv");
         assertThrows(IllegalArgumentException.class, () -> {
             new Grid(table);
         });

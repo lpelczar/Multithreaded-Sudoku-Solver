@@ -95,7 +95,7 @@ public class SudokuChecker {
     private static boolean checkDuplicates(List <Integer> collection){
 
 
-        for (int j = 1; j < 9; j++) {
+        for (int j = 1; j <= 9; j++) {
             if (Collections.frequency(collection, j) > 1) {
                 return false;
             }

@@ -4,6 +4,8 @@ package solver;
 import model.Cell;
 import model.Grid;
 
+import java.util.stream.Stream;
+
 public class SolverThread implements Runnable {
 
     static int threadsUsed = 0;
@@ -24,11 +26,13 @@ public class SolverThread implements Runnable {
             System.out.println(solver.getGrid().toString());
             System.out.println("Threads used: " + threadsUsed);
         } else {
-            splitSolving();
+            if (!Stream.of(solver.getGrid().getCells()).allMatch(x -> x.getValue() != 0))
+                splitSolving();
         }
     }
 
     private void splitSolving() {
+
 
         Cell cell = getCellWithLowestPossibilities();
         int x = cell.getX();
@@ -38,7 +42,7 @@ public class SolverThread implements Runnable {
 
 
         int[] cellValues = solver.getGrid().translateCells();
-        try {
+
             Grid gridA = new Grid(cellValues);
             Grid gridB = new Grid(cellValues);
             gridA.getCell(x, y).setValue(valueA);
@@ -49,7 +53,6 @@ public class SolverThread implements Runnable {
             Thread threadB = new Thread(new SolverThread(solverB));
             threadA.start();
             threadB.start();
-        }catch (IllegalArgumentException e){}
     }
 
     private Cell getCellWithLowestPossibilities() {

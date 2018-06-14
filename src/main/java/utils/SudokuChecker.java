@@ -22,7 +22,7 @@ public class SudokuChecker {
 
         for(int i = 0; i < cellValues.size(); i = i + 9){
             List <Integer> row = cellValues.subList(i, i+9);
-            if(!checkDuplicates(row)){
+            if(checkDuplicates(row)){
                 return false;
             }
 
@@ -38,7 +38,7 @@ public class SudokuChecker {
            for(int j = i; j < cellValues.size(); j+=9){
                    row.add(cellValues.get(j));
                }
-           if(!checkDuplicates(row)){
+           if(checkDuplicates(row)){
                return false;
            }
         }
@@ -55,7 +55,7 @@ public class SudokuChecker {
                 box.add(cellValues.get(j + 1));
                 box.add(cellValues.get(j + 2));
             }
-            if(!checkDuplicates(box)){
+            if(checkDuplicates(box)){
                 return false;
             }
 
@@ -69,7 +69,7 @@ public class SudokuChecker {
                 box.add(cellValues.get(j + 1));
                 box.add(cellValues.get(j + 2));
             }
-            if(!checkDuplicates(box)){
+            if(checkDuplicates(box)){
                 return false;
             }
 
@@ -83,7 +83,7 @@ public class SudokuChecker {
                 box.add(cellValues.get(j + 1));
                 box.add(cellValues.get(j + 2));
             }
-            if(!checkDuplicates(box)){
+            if(checkDuplicates(box)){
                 return false;
             }
 
@@ -97,10 +97,10 @@ public class SudokuChecker {
 
         for (int j = 1; j <= 9; j++) {
             if (Collections.frequency(collection, j) > 1) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
 
     }
 }

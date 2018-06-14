@@ -8,7 +8,7 @@ import utils.InvalidSudokuException;
 
 public class SolverThread implements Runnable {
 
-    static int threadsUsed = 0;
+    private static int threadsUsed = 0;
     private Solver solver;
 
     public SolverThread(Solver solver) {
@@ -61,7 +61,6 @@ public class SolverThread implements Runnable {
     private Cell getCellWithLowestPossibilities() {
 
         int possibilities = 2;
-        boolean cellFound = false;
 
         while (possibilities < 10) {
             for (Cell cell : solver.getGrid().getCells()) {

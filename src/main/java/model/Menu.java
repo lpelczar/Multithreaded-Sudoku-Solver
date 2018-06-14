@@ -49,7 +49,7 @@ public class Menu {
     }
 
     private void printOptions(){
-        System.out.println("Welcome to Multithreaded Sudoku Solver v.0.1!");
+        System.out.println("Welcome to Multithreaded Sudoku Solver ver 0.1!");
         for(String option : MENU_OPTIONS){
             System.out.println(option);
         }

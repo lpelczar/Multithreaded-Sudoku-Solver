@@ -1,9 +1,9 @@
 package loader;
 
 import com.opencsv.CSVReader;
-import com.sun.istack.internal.Nullable;
 import utils.IntegerChecker;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;

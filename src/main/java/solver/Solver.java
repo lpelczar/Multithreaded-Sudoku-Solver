@@ -2,11 +2,13 @@ package solver;
 
 import model.Cell;
 import model.Grid;
+import utils.SudokuChecker;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class Solver {
@@ -67,7 +69,7 @@ public class Solver {
         }
     }
 
-    public void solve() {
+    public boolean solve() {
         while (!cycleFailed) {
             fillWithPossibilities();
             for (int i = 0; i < 9; i++) {
@@ -82,10 +84,13 @@ public class Solver {
                 countSolved(grid.getRow(i));
             }
         }
-        System.out.println(grid.toString());
+        return isSolved();
     }
 
-    // TODO 1: isSolved method
+    private boolean isSolved() {
+        return Stream.of(grid.getCells()).allMatch(x -> x.getValue() != 0) &&
+               SudokuChecker.isSudoku(grid.translateCells());
+    }
 
     public Grid getGrid() {
         return grid;

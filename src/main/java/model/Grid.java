@@ -1,23 +1,28 @@
 package model;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
+import utils.SudokuChecker;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Grid {
 
     private static final int WIDTH = 9;
     private static final int HEIGHT = 9;
+    private static final int NUMBER_OF_CELLS = 81;
     private Cell[] cells;
 
     public Grid(int[] cellValues) {
-        //TODO: validate cells length (81) and check is it a valid sudoku
-        initializeCellsFrom(cellValues);
+        if(SudokuChecker.isSudoku(cellValues)) {
+            initializeCellsFrom(cellValues);
+        }else {
+            throw new IllegalArgumentException("It is not a sudoku");
+        }
     }
 
     private void initializeCellsFrom(int[] cellValues) {
-        cells = new Cell[81];
+        cells = new Cell[NUMBER_OF_CELLS];
         for (int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {
                 int index = y * WIDTH + x;
@@ -94,5 +99,9 @@ public class Grid {
             if (i % 27 == 0) sb.append(horizontalSeparator);
         }
         return sb.toString();
+    }
+
+    public String toStringForTest() {
+        return  Arrays.toString(cells);
     }
 }

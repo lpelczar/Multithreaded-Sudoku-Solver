@@ -22,40 +22,38 @@ public class Menu {
 
     public void run(){
 
-        while (true) {
+        printOptions();
+        String userChoice = getInput();
 
-            printOptions();
-            String userChoice = getInput();
+        switch (userChoice) {
+            case "0":
+                System.exit(1);
+                break;
+            case "1":
+                System.out.println("\nSolving easy sudoku");
+                printUnsolvedSudoku(EASY_UNSOLVED_FILEPATH);
+                solveSudoku(EASY_UNSOLVED_FILEPATH);
+                break;
+            case "2":
+                System.out.println("\nSolving hard sudoku");
+                printUnsolvedSudoku(HARD_UNSOLVED_FILEPATH);
+                solveSudoku(HARD_UNSOLVED_FILEPATH);
+                break;
+            case "3":
+                System.out.println("\nSolving world's hardest sudoku");
+                printUnsolvedSudoku(HARDEST_UNSOLVED_FILEPATH);
+                solveSudoku(HARDEST_UNSOLVED_FILEPATH);
+                break;
 
-            switch (userChoice) {
-                case "0":
-                    System.exit(1);
-                    break;
-                case "1":
-                    System.out.println("Solving easy sudoku");
-                    printUnsolvedSudoku(EASY_UNSOLVED_FILEPATH);
-                    solveSudoku(EASY_UNSOLVED_FILEPATH);
-                    break;
-                case "2":
-                    System.out.println("Solving hard sudoku");
-                    printUnsolvedSudoku(HARD_UNSOLVED_FILEPATH);
-                    solveSudoku(HARD_UNSOLVED_FILEPATH);
-                    break;
-                case "3":
-                    System.out.println("Solving world's hardest sudoku");
-                    printUnsolvedSudoku(HARDEST_UNSOLVED_FILEPATH);
-                    solveSudoku(HARDEST_UNSOLVED_FILEPATH);
-                    break;
-
-            }
         }
     }
 
     private void printOptions(){
-
+        System.out.println("Welcome to Multithreaded Sudoku Solver v.0.1!");
         for(String option : MENU_OPTIONS){
             System.out.println(option);
         }
+        System.out.print("Choose sudoku: ");
     }
 
     private String getInput(){

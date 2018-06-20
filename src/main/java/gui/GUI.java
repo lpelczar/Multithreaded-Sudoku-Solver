@@ -18,13 +18,18 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import loader.CsvLoader;
+import model.Grid;
+import model.SolutionListener;
+import solver.Solver;
+import solver.SolverThread;
+import utils.InvalidSudokuException;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class GUI extends Application {
+public class GUI extends Application implements SolutionListener {
 
     private TextField[] cells = new TextField[81];
 
@@ -68,8 +73,20 @@ public class GUI extends Application {
         Label message = new Label("Enter sudoku manually or import from CSV file");
         solveButton.setOnAction(event -> {
             try {
-                int[] values = getSudokuIntArrayFrom(cells);
-                message.setText("Success?");
+                int[] sudokuArray = getSudokuIntArrayFrom(cells);
+                if (sudokuArray != null) {
+                    Grid grid = null;
+                    try {
+                        grid = new Grid(sudokuArray);
+                        Solver solver = new Solver(grid);
+                        SolverThread solverThread = new SolverThread(solver);
+                        solverThread.addListener(this);
+                        Thread thread = new Thread(solverThread);
+                        thread.start();
+                    } catch (InvalidSudokuException e) {
+                        message.setText("Invalid sudoku");
+                    }
+                }
             } catch (IllegalStateException e) {
                 message.setText(e.getMessage());
             }
@@ -85,12 +102,12 @@ public class GUI extends Application {
 
     private void fillWithValues(TextField[] cells, int[] values) {
         for (int i = 0; i < cells.length; i++) {
-            if(values[i] != 0) cells[i].setText(String.valueOf(values[i]));
+            if(values[i] == 0) {
+                cells[i].setText("");
+            } else {
+                cells[i].setText(String.valueOf(values[i]));
+            }
         }
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
     private int[] getSudokuIntArrayFrom(TextField[] cells) {
@@ -109,5 +126,10 @@ public class GUI extends Application {
             values[i] = val;
         }
         return values;
+    }
+
+    @Override
+    public void solutionFound(int[] solution) {
+        fillWithValues(cells, solution);
     }
 }

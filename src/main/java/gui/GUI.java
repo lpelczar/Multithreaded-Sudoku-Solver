@@ -1,19 +1,15 @@
 package gui;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.nio.file.Path;
-import java.util.Arrays;
 
 public class GUI extends Application {
 
@@ -37,13 +33,19 @@ public class GUI extends Application {
         }
 
         Button solveButton = new Button("Solve!");
-        solveButton.setOnAction(e -> {
-            int[] values = getSudokuIntArrayFrom(cells);
-            System.out.println(Arrays.toString(values));
+        Label message = new Label("Enter sudoku manually or import from CSV file");
+        solveButton.setOnAction(event -> {
+            try {
+                int[] values = getSudokuIntArrayFrom(cells);
+                message.setText("Success?");
+            } catch (IllegalStateException e) {
+                message.setText(e.getMessage());
+            }
         });
 
+
         VBox v = new VBox(0);
-        v.getChildren().addAll(gpLayout, solveButton);
+        v.getChildren().addAll(gpLayout, solveButton, message);
         v.setAlignment(Pos.CENTER);
         primaryStage.setScene(new Scene(v, 350, 450));
         primaryStage.show();

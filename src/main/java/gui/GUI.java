@@ -1,14 +1,19 @@
 package gui;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.nio.file.Path;
+import java.util.Arrays;
 
 public class GUI extends Application {
 
@@ -32,6 +37,10 @@ public class GUI extends Application {
         }
 
         Button solveButton = new Button("Solve!");
+        solveButton.setOnAction(e -> {
+            int[] values = getSudokuIntArrayFrom(cells);
+            System.out.println(Arrays.toString(values));
+        });
 
         VBox v = new VBox(0);
         v.getChildren().addAll(gpLayout, solveButton);
@@ -42,5 +51,23 @@ public class GUI extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    private int[] getSudokuIntArrayFrom(TextField[] cells) {
+        int[] values = new int[cells.length];
+        for (int i = 0; i < values.length; i++) {
+            int val = -1;
+            String str = cells[i].getCharacters().toString();
+            if (str.equals("") || str.equals("0")) {
+                val = 0;
+            } else if (str.matches("^[1-9]{1}$")) {
+                val = Integer.valueOf(str);
+            } else {
+                throw new IllegalStateException("Cell must be empty or contain number from 1 to 9");
+            }
+
+            values[i] = val;
+        }
+        return values;
     }
 }

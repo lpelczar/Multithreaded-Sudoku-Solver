@@ -1,15 +1,28 @@
 package gui;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import loader.CsvLoader;
+
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 
 public class GUI extends Application {
 
@@ -24,6 +37,25 @@ public class GUI extends Application {
         gpLayout.setPadding(new Insets(20, 20, 20, 20));
         gpLayout.setHgap(8);
         gpLayout.setVgap(8);
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Sudoku CSV file");
+
+        MenuBar menuBar = new MenuBar();
+        Menu menuFile = new Menu("File");
+        MenuItem add = new MenuItem("Import from CSV");
+        add.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                File file = fileChooser.showOpenDialog(primaryStage);
+                if (file != null) {
+                    // TODO: validate the chosen file
+                    int[] values = new CsvLoader().load(file.toString());
+                    fillWithValues(cells, values);
+                }
+            }
+        });
+        menuFile.getItems().add(add);
+        menuBar.getMenus().add(menuFile);
 
         for (int i = 0; i < cells.length; i++) {
             TextField tf = new TextField();
@@ -45,10 +77,16 @@ public class GUI extends Application {
 
 
         VBox v = new VBox(0);
-        v.getChildren().addAll(gpLayout, solveButton, message);
-        v.setAlignment(Pos.CENTER);
+        v.getChildren().addAll(menuBar, gpLayout, solveButton, message);
+        v.setAlignment(Pos.TOP_CENTER);
         primaryStage.setScene(new Scene(v, 350, 450));
         primaryStage.show();
+    }
+
+    private void fillWithValues(TextField[] cells, int[] values) {
+        for (int i = 0; i < cells.length; i++) {
+            if(values[i] != 0) cells[i].setText(String.valueOf(values[i]));
+        }
     }
 
     public static void main(String[] args) {

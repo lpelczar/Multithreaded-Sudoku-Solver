@@ -34,7 +34,7 @@ public class GUI extends Application implements SolutionListener {
     private TextField[] cells = new TextField[81];
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
 
         primaryStage.setTitle("Sudoku Solver");
 
@@ -49,14 +49,12 @@ public class GUI extends Application implements SolutionListener {
         MenuBar menuBar = new MenuBar();
         Menu menuFile = new Menu("File");
         MenuItem add = new MenuItem("Import from CSV");
-        add.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent t) {
-                File file = fileChooser.showOpenDialog(primaryStage);
-                if (file != null) {
-                    // TODO: validate the chosen file
-                    int[] values = new CsvLoader().load(file.toString());
-                    fillWithValues(cells, values);
-                }
+        add.setOnAction(t -> {
+            File file = fileChooser.showOpenDialog(primaryStage);
+            if (file != null) {
+                // TODO: validate the chosen file
+                int[] values = new CsvLoader().load(file.toString());
+                fillWithValues(cells, values);
             }
         });
         menuFile.getItems().add(add);
@@ -75,7 +73,7 @@ public class GUI extends Application implements SolutionListener {
             try {
                 int[] sudokuArray = getSudokuIntArrayFrom(cells);
                 if (sudokuArray != null) {
-                    Grid grid = null;
+                    Grid grid;
                     try {
                         grid = new Grid(sudokuArray);
                         Solver solver = new Solver(grid);
@@ -113,11 +111,11 @@ public class GUI extends Application implements SolutionListener {
     private int[] getSudokuIntArrayFrom(TextField[] cells) {
         int[] values = new int[cells.length];
         for (int i = 0; i < values.length; i++) {
-            int val = -1;
+            int val;
             String str = cells[i].getCharacters().toString();
             if (str.equals("") || str.equals("0")) {
                 val = 0;
-            } else if (str.matches("^[1-9]{1}$")) {
+            } else if (str.matches("^[1-9]$")) {
                 val = Integer.valueOf(str);
             } else {
                 throw new IllegalStateException("Cell must be empty or contain number from 1 to 9");

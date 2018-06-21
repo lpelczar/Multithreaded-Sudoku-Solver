@@ -22,7 +22,7 @@ public class SolverThread implements Runnable {
     }
 
     private void notifySolution(int[] solution) {
-            listener.solutionFound(solution);
+        listener.solutionFound(solution, threadsUsed);
     }
 
     @Override

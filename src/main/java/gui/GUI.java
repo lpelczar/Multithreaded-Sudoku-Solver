@@ -1,6 +1,7 @@
 package gui;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -31,6 +32,7 @@ public class GUI extends Application implements SolutionListener {
 
     private TextField[] cells = new TextField[81];
     private boolean isNonSolved = true;
+    private Label threadsUsedLabel;
 
     @Override
     public void start(Stage primaryStage) {
@@ -68,6 +70,10 @@ public class GUI extends Application implements SolutionListener {
 
         Button solveButton = new Button("Solve!");
         Label message = new Label("Enter sudoku manually or import from CSV file");
+        message.setPadding(new Insets(20,0,0,0));
+        threadsUsedLabel = new Label("Threads used: -");
+        threadsUsedLabel.setPadding(new Insets(20,0,0,0));
+
         solveButton.setOnAction(event -> {
             try {
                 if (this.isNonSolved) {
@@ -95,9 +101,9 @@ public class GUI extends Application implements SolutionListener {
 
 
         VBox v = new VBox(0);
-        v.getChildren().addAll(menuBar, gpLayout, solveButton, message);
+        v.getChildren().addAll(menuBar, gpLayout, solveButton, message, threadsUsedLabel);
         v.setAlignment(Pos.TOP_CENTER);
-        primaryStage.setScene(new Scene(v, 350, 450));
+        primaryStage.setScene(new Scene(v, 350, 510));
         primaryStage.show();
     }
 
@@ -134,8 +140,17 @@ public class GUI extends Application implements SolutionListener {
     }
 
     @Override
-    public void solutionFound(int[] solution) {
+    public void solutionFound(int[] solution, int threadsUsed) {
+
+        Platform.runLater(() -> {
+            fillWithValues(cells, solution);
+            setThreadsCounter(threadsUsed);
+        });
+
         this.isNonSolved = false;
-        fillWithValues(cells, solution);
+    }
+
+    private void setThreadsCounter(int threadsUsed) {
+        threadsUsedLabel.setText("Threads used: " + String.valueOf(threadsUsed));
     }
 }

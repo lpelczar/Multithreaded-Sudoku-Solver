@@ -85,6 +85,7 @@ public class GUI extends Application implements SolutionListener {
                             Solver solver = new Solver(grid);
                             SolverThread solverThread = new SolverThread(solver);
                             solverThread.registerListener(this);
+                            solverThread.setThreadsUsed(0);
                             Thread thread = new Thread(solverThread);
                             thread.start();
                         } catch (InvalidSudokuException e) {

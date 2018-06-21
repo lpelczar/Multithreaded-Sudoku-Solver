@@ -6,28 +6,23 @@ import model.Grid;
 import model.SolutionListener;
 import utils.InvalidSudokuException;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class SolverThread implements Runnable {
 
     private static int threadsUsed = 0;
     private Solver solver;
-    private List<SolutionListener> listeners;
+    private static SolutionListener listener;
 
     public SolverThread(Solver solver) {
         this.solver = solver;
-        this.listeners = new ArrayList<>();
     }
 
-    public void addListener(SolutionListener toAdd) {
-        listeners.add(toAdd);
+    public void registerListener(SolutionListener solutionListener) {
+        listener = solutionListener;
     }
 
     private void notifySolution(int[] solution) {
-        for (SolutionListener sl : listeners)
-            sl.solutionFound(solution);
+            listener.solutionFound(solution);
     }
 
     @Override
@@ -67,7 +62,6 @@ public class SolverThread implements Runnable {
             gridA.getCell(x, y).setValue(valueA);
             Solver solverA = new Solver(gridA);
             SolverThread solverThreadA = new SolverThread(solverA);
-            solverThreadA.addListener(listeners.get(0));
             Thread threadA = new Thread(solverThreadA);
             threadA.start();
 
@@ -75,7 +69,6 @@ public class SolverThread implements Runnable {
             gridB.getCell(x, y).setValue(valueB);
             Solver solverB = new Solver(gridB);
             SolverThread solverThreadB = new SolverThread(solverB);
-            solverThreadB.addListener(listeners.get(0));
             Thread threadB = new Thread(solverThreadB);
             threadB.start();
     }

@@ -78,7 +78,7 @@ public class GUI extends Application implements SolutionListener {
                         grid = new Grid(sudokuArray);
                         Solver solver = new Solver(grid);
                         SolverThread solverThread = new SolverThread(solver);
-                        solverThread.addListener(this);
+                        solverThread.registerListener(this);
                         Thread thread = new Thread(solverThread);
                         thread.start();
                     } catch (InvalidSudokuException e) {
@@ -105,6 +105,10 @@ public class GUI extends Application implements SolutionListener {
             } else {
                 cells[i].setText(String.valueOf(values[i]));
             }
+        }
+
+        for (TextField field : cells) {
+            field.setStyle("<font-weight>: regular");
         }
     }
 

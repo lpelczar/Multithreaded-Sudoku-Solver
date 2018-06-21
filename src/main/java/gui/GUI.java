@@ -6,7 +6,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
@@ -24,14 +23,12 @@ import solver.Solver;
 import solver.SolverThread;
 import utils.InvalidSudokuException;
 
-import java.awt.*;
 import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
 
 public class GUI extends Application implements SolutionListener {
 
     private TextField[] cells = new TextField[81];
+    private boolean isNonSolved = true;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -53,6 +50,7 @@ public class GUI extends Application implements SolutionListener {
             public void handle(ActionEvent t) {
                 File file = fileChooser.showOpenDialog(primaryStage);
                 if (file != null) {
+                    isNonSolved = true;
                     // TODO: validate the chosen file
                     int[] values = new CsvLoader().load(file.toString());
                     fillWithValues(cells, values);
@@ -73,21 +71,25 @@ public class GUI extends Application implements SolutionListener {
         Label message = new Label("Enter sudoku manually or import from CSV file");
         solveButton.setOnAction(event -> {
             try {
-                int[] sudokuArray = getSudokuIntArrayFrom(cells);
-                if (sudokuArray != null) {
-                    Grid grid = null;
-                    try {
-                        grid = new Grid(sudokuArray);
-                        Solver solver = new Solver(grid);
-                        SolverThread solverThread = new SolverThread(solver);
-                        solverThread.addListener(this);
-                        Thread thread = new Thread(solverThread);
-                        thread.start();
-                    } catch (InvalidSudokuException e) {
-                        message.setText("Invalid sudoku");
+                if (this.isNonSolved) {
+                    int[] sudokuArray = getSudokuIntArrayFrom(cells);
+                    if (sudokuArray != null) {
+                        Grid grid = null;
+                        try {
+                            grid = new Grid(sudokuArray);
+                            Solver solver = new Solver(grid);
+                            SolverThread solverThread = new SolverThread(solver);
+                            solverThread.addListener(this);
+                            Thread thread = new Thread(solverThread);
+                            thread.start();
+                        } catch (InvalidSudokuException e) {
+                            message.setText("Invalid sudoku");
+                        }
                     }
+                } else {
+                    message.setText("Sudoku is already solved");
                 }
-            } catch (IllegalStateException e) {
+            }catch(IllegalArgumentException e){
                 message.setText(e.getMessage());
             }
         });
@@ -130,6 +132,7 @@ public class GUI extends Application implements SolutionListener {
 
     @Override
     public void solutionFound(int[] solution) {
+        this.isNonSolved = false;
         fillWithValues(cells, solution);
     }
 }

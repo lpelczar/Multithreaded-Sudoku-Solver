@@ -9,12 +9,17 @@ import utils.InvalidSudokuException;
 
 public class SolverThread implements Runnable {
 
+    private static final int MAX_THREADS = 1000;
     private static int threadsUsed = 0;
     private Solver solver;
     private static SolutionListener listener;
 
     public SolverThread(Solver solver) {
         this.solver = solver;
+    }
+
+    public static void setThreadsUsed(int threadsUsed) {
+        SolverThread.threadsUsed = threadsUsed;
     }
 
     public void registerListener(SolutionListener solutionListener) {
@@ -47,6 +52,7 @@ public class SolverThread implements Runnable {
 
     private void splitSolving() {
 
+        if (threadsUsed > MAX_THREADS) throw new InvalidSudokuException();
 
         Cell cell = getCellWithLowestPossibilities();
         int x = cell.getX();

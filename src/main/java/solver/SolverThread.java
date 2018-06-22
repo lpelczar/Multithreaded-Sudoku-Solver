@@ -3,16 +3,31 @@ package solver;
 
 import model.Cell;
 import model.Grid;
+import model.SolutionListener;
 import utils.InvalidSudokuException;
 
 
 public class SolverThread implements Runnable {
 
+    private static final int MAX_THREADS = 1000;
     private static int threadsUsed = 0;
     private Solver solver;
+    private static SolutionListener listener;
 
     public SolverThread(Solver solver) {
         this.solver = solver;
+    }
+
+    public static void setThreadsUsed(int threadsUsed) {
+        SolverThread.threadsUsed = threadsUsed;
+    }
+
+    public void registerListener(SolutionListener solutionListener) {
+        listener = solutionListener;
+    }
+
+    private void notifySolution(int[] solution) {
+        listener.solutionFound(solution, threadsUsed);
     }
 
     @Override
@@ -23,6 +38,7 @@ public class SolverThread implements Runnable {
         boolean isSolved = solver.solve();
 
         if (isSolved) {
+            notifySolution(solver.getGrid().translateCells());
             System.out.println(solver.getGrid().toString());
             System.out.println("Threads used: " + threadsUsed);
         } else {
@@ -36,6 +52,7 @@ public class SolverThread implements Runnable {
 
     private void splitSolving() {
 
+        if (threadsUsed > MAX_THREADS) throw new InvalidSudokuException();
 
         Cell cell = getCellWithLowestPossibilities();
         int x = cell.getX();
@@ -46,15 +63,19 @@ public class SolverThread implements Runnable {
 
         int[] cellValues = solver.getGrid().translateCells();
 
+            // TODO: create a method to not repeat code
             Grid gridA = new Grid(cellValues);
-            Grid gridB = new Grid(cellValues);
             gridA.getCell(x, y).setValue(valueA);
-            gridB.getCell(x, y).setValue(valueB);
             Solver solverA = new Solver(gridA);
-            Solver solverB = new Solver(gridB);
-            Thread threadA = new Thread(new SolverThread(solverA));
-            Thread threadB = new Thread(new SolverThread(solverB));
+            SolverThread solverThreadA = new SolverThread(solverA);
+            Thread threadA = new Thread(solverThreadA);
             threadA.start();
+
+            Grid gridB = new Grid(cellValues);
+            gridB.getCell(x, y).setValue(valueB);
+            Solver solverB = new Solver(gridB);
+            SolverThread solverThreadB = new SolverThread(solverB);
+            Thread threadB = new Thread(solverThreadB);
             threadB.start();
     }
 

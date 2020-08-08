@@ -30,11 +30,11 @@ Finally, one thread will find a solution and make callback to main thread.
 
 ## Screenshots
 
-![c1](https://raw.github.com/lpelczar/Multithreaded-Sudoku-Solver/master/docs/sudoku1.png)
+![c1](https://raw.github.com/lpelczar/Multithreaded-Sudoku-Solver/master/docs/sudoku1-1.png)
 
 ![c1](https://raw.github.com/lpelczar/Multithreaded-Sudoku-Solver/master/docs/sudoku2.png)
 
-![c1](https://raw.github.com/lpelczar/Multithreaded-Sudoku-Solver/master/docs/sudoku3.png)
+![c1](https://raw.github.com/lpelczar/Multithreaded-Sudoku-Solver/master/docs/sudoku3-1.png)
 
 ## More info
 

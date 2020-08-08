@@ -15,7 +15,7 @@ Phase 2 - Updating solved cells for every column, row and box
 
 ![c1](https://raw.github.com/lpelczar/Multithreaded-Sudoku-Solver/master/docs/phase2.png)
 
-![c1](https://raw.github.com/lpelczar/Multithreaded-Sudoku-Solver/master/docs/phase3-1.png)
+![c1](https://raw.github.com/lpelczar/Multithreaded-Sudoku-Solver/master/docs/phase3-2.png)
 
 
 However not every sudoku can be solved by this approach alone. For more advanced sudoku's when there are no more sole candidates algorithm finds a cell with least number of possibilities and start new thread for each possibility.
@@ -30,11 +30,11 @@ Finally, one thread will find a solution and make callback to main thread.
 
 ## Screenshots
 
-![c1](https://raw.github.com/lpelczar/Multithreaded-Sudoku-Solver/master/docs/sudoku1.png)
+![c1](https://raw.github.com/lpelczar/Multithreaded-Sudoku-Solver/master/docs/sudoku1-1.png)
 
 ![c1](https://raw.github.com/lpelczar/Multithreaded-Sudoku-Solver/master/docs/sudoku2.png)
 
-![c1](https://raw.github.com/lpelczar/Multithreaded-Sudoku-Solver/master/docs/sudoku3.png)
+![c1](https://raw.github.com/lpelczar/Multithreaded-Sudoku-Solver/master/docs/sudoku3-1.png)
 
 ## More info
 
